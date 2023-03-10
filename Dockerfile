@@ -6,7 +6,7 @@ ENV LITESTREAM_VERSION=v0.3.9
 RUN apt update && \
     apt install -y curl && \
     TARGETARCH=$([ "$TARGETARCH" = "aarch64" ] && echo "arm64" || echo "$TARGETARCH"); \
-    curl -L https://github.com/benbjohnson/litestream/releases/download/${LITESTREAM_VERSION}/litestream-${LITESTREAM_VERSION}-linux-${TARGETARCH}-static.tar.gz -o /litestream.tar.gz ; \
+    curl -f -L https://github.com/benbjohnson/litestream/releases/download/${LITESTREAM_VERSION}/litestream-${LITESTREAM_VERSION}-linux-${TARGETARCH}-static.tar.gz -o /litestream.tar.gz ; \
     mkdir -p /litestream && \
     tar -xzf /litestream.tar.gz -C /litestream
 
@@ -17,8 +17,8 @@ ENV ENVSUBST_VERSION=v1.4.2
 
 RUN apt update && \
     apt install -y curl && \
-    TARGETARCH=$([ "$TARGETARCH" = "aarch64" ] && echo "arm64" || echo "$TARGETARCH"); \
-    curl -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-${TARGETARCH} -o /envsubst && \
+    TARGETARCH=$([ "$TARGETARCH" = "aarch64" ] && echo "arm64" || echo "x86_64"); \
+    curl -f -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-${TARGETARCH} -o /envsubst && \
     chmod +x /envsubst
 
 FROM louislam/uptime-kuma:1
