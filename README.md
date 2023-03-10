@@ -26,7 +26,7 @@ docker run \
 
 ## SQLite + Litestream
 
-> [Litestream](https://litestream.io/) is
+> [Litestream](https://litestream.io/) is extra horse power for SQLite. Stream SQLite to cloud storage, e.q. S3.
 
 ```
 docker run \
