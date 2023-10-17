@@ -30,6 +30,8 @@ COPY --from=envsubst /envsubst /usr/local/bin/envsubst
 
 COPY ./litestream /srv/litestream
 
+RUN mkdir -p /app/data
+
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 755 /entrypoint.sh
 CMD ["/entrypoint.sh"]
