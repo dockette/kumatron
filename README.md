@@ -1,7 +1,7 @@
 <h1 align=center>Dockette / Kumatron</h1>
 
 <p align=center>
-   🐳 [Uptime Kuma](https://github.com/louislam/uptime-kuma) with extra juicy configuration and streaming SQLite.
+   🐳 <a href="https://github.com/louislam/uptime-kuma">Uptime Kuma</a> with extra juicy configuration and streaming SQLite.
 </p>
 
 <p align=center>
