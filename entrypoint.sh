@@ -31,7 +31,6 @@ else
     echo "Not used"
 fi
 
-
 printf "\n\n"
 
 if [[ ! -z "${LITESTREAM}" ]]; then
