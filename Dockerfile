@@ -21,7 +21,7 @@ RUN apt update && \
     curl -f -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-${TARGETARCH} -o /envsubst && \
     chmod +x /envsubst
 
-FROM louislam/uptime-kuma:1.22.1
+FROM louislam/uptime-kuma:1.23.11
 
 ENV DATA_DIR=./data/
 
