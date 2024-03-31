@@ -1,6 +1,8 @@
 name: "Docker"
 
 on:
+  workflow_dispatch:
+
   push:
     branches: ["master"]
 
@@ -13,6 +15,15 @@ jobs:
     uses: dockette/.github/.github/workflows/docker.yml@master
     secrets: inherit
     with:
-      image: "dockette/kumatron"
-      tag: "latest"
-      context: "."
+        image: "dockette/kumatron"
+        tag: "${{ matrix.tag }}"
+        context: "${{ matrix.context }}"
+    strategy:
+      matrix:
+        include:
+          - tag: latest
+            context: .
+          - tag: 202403
+            context: .
+
+      fail-fast: false
