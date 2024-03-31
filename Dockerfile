@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim as litestream
 
 ARG TARGETARCH
-ENV LITESTREAM_VERSION=v0.3.9
+ENV LITESTREAM_VERSION=v0.3.13
 
 RUN apt update && \
     apt install -y curl && \
