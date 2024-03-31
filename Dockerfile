@@ -6,7 +6,7 @@ ENV LITESTREAM_VERSION=v0.3.13
 RUN apt update && \
     apt install -y curl && \
     TARGETARCH=$([ "$TARGETARCH" = "aarch64" ] && echo "arm64" || echo "$TARGETARCH"); \
-    curl -f -L https://github.com/benbjohnson/litestream/releases/download/${LITESTREAM_VERSION}/litestream-${LITESTREAM_VERSION}-linux-${TARGETARCH}-static.tar.gz -o /litestream.tar.gz ; \
+    curl -f -L https://github.com/benbjohnson/litestream/releases/download/${LITESTREAM_VERSION}/litestream-${LITESTREAM_VERSION}-linux-${TARGETARCH}.tar.gz -o /litestream.tar.gz ; \
     mkdir -p /litestream && \
     tar -xzf /litestream.tar.gz -C /litestream
 
