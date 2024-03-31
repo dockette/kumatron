@@ -1,5 +1,6 @@
 #!/bin/bash
 set -Eeo pipefail
+set -o xtrace
 
 echo "Kumatron"
 
