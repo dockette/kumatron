@@ -34,7 +34,7 @@ fi
 printf "\n\n"
 
 if [[ ! -z "${LITESTREAM}" ]]; then
-    litestream restore -v -if-replica-exists -config /srv/litestream/litestream.yml "${LITESTREAM_DB_FILE}"
+    litestream restore -if-replica-exists -config /srv/litestream/litestream.yml "${LITESTREAM_DB_FILE}"
     exec litestream replicate -config /srv/litestream/litestream.yml -exec "node /app/server/server.js"
 else
     exec node /app/server/server.js
