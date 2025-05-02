@@ -23,7 +23,7 @@ jobs:
         include:
           - tag: latest
             context: .
-          - tag: 202403
+          - tag: 20250502
             context: .
 
       fail-fast: false
