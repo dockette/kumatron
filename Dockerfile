@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim as litestream
+FROM debian:bullseye-slim AS litestream
 
 ARG TARGETARCH
 ENV LITESTREAM_VERSION=v0.3.13
@@ -10,7 +10,7 @@ RUN apt update && \
     mkdir -p /litestream && \
     tar -xzf /litestream.tar.gz -C /litestream
 
-FROM debian:bullseye-slim as envsubst
+FROM debian:bullseye-slim AS envsubst
 
 ARG TARGETARCH
 ENV ENVSUBST_VERSION=v1.4.2
@@ -21,7 +21,7 @@ RUN apt update && \
     curl -f -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-${TARGETARCH} -o /envsubst && \
     chmod +x /envsubst
 
-FROM louislam/uptime-kuma:1.23.11
+FROM louislam/uptime-kuma:1.23.16-debian
 
 ENV DATA_DIR=./data/
 
