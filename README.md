@@ -43,8 +43,17 @@ docker run \
 	-e LITESTREAM_S3_BUCKET=foobar \
 	-e LITESTREAM_S3_ACCESS_KEY_ID=foobar \
 	-e LITESTREAM_S3_SECRET_ACCESS_KEY=foobarbaz \
+	-e LITESTREAM_RETENTION=24h \
+	-e LITESTREAM_RETENTION_CHECK_INTERVAL=1h \
+	-e LITESTREAM_SNAPSHOT_INTERVAL=10s \
+	-e LITESTREAM_SYNC_INTERVAL=1s \
+	-e LITESTREAM_VALIDATION_INTERVAL=false \
+	-v /your/path:/app/data \
 	dockette/kumatron
 ```
+
+> [!TIP]
+> For more detailed configuration options, please refer to the [Litestream official documentation](https://litestream.io/reference/config/).
 
 ## Development
 
