@@ -1,6 +1,13 @@
 <h1 align=center>Dockette / Kumatron</h1>
 
 <p align=center>
+   <a href="https://github.com/dockette/kumatron/actions"><img src="https://github.com/dockette/kumatron/actions/workflows/docker.yml/badge.svg" alt="GitHub Actions"></a>
+   <a href="https://hub.docker.com/r/dockette/kumatron"><img src="https://img.shields.io/docker/pulls/dockette/kumatron.svg" alt="Docker Hub pulls"></a>
+   <a href="https://github.com/sponsors/f3l1x"><img src="https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa" alt="GitHub Sponsors"></a>
+   <a href="https://github.com/orgs/dockette/discussions"><img src="https://img.shields.io/badge/support-discussions-6f42c1" alt="Support/Discussions"></a>
+</p>
+
+<p align=center>
    🐳 <a href="https://github.com/louislam/uptime-kuma">Uptime Kuma</a> with extra juicy configuration and streaming SQLite.
 </p>
 
@@ -57,14 +64,12 @@ docker run \
 
 ## Development
 
-See [how to contribute](https://contributte.org/contributing.html) to this package.
+```sh
+make build
+make test
+make run
+```
 
-This package is currently maintaining by these authors.
+## Maintenance
 
-<a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
-</a>
-
------
-
-Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Also thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
