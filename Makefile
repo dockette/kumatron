@@ -7,14 +7,16 @@ DOCKER_IMAGE=dockette/kumatron
 DOCKER_TAG?=latest
 DOCKER_TEST_PORT?=3001
 
-.PHONY: build enter test test-s3 run
 
+.PHONY: build
 build:
 	docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
 
+.PHONY: enter
 enter:
 	docker exec -it kumatron bash
 
+.PHONY: test
 test:
 	docker rm -f kumatron-test >/dev/null 2>&1 || true
 	docker run -d --name kumatron-test ${DOCKER_IMAGE}:${DOCKER_TAG}
@@ -29,6 +31,7 @@ test:
 	docker rm -f kumatron-test >/dev/null; \
 	exit 1
 
+.PHONY: run
 run:
 	docker run \
 		-it \
@@ -37,6 +40,7 @@ run:
 		--name kumatron \
 		${DOCKER_IMAGE}:${DOCKER_TAG}
 
+.PHONY: test-s3
 test-s3:
 	docker run \
 		-it \
