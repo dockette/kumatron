@@ -3,19 +3,23 @@ include .env.dist
 -include .env
 export
 
+DOCKER_IMAGE=dockette/kumatron
+DOCKER_TAG?=latest
+DOCKER_TEST_PORT?=3001
+
 .PHONY: build enter test test-s3 run
 
 build:
-	docker build -t dockette/kumatron .
+	docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
 
 enter:
 	docker exec -it kumatron bash
 
 test:
 	docker rm -f kumatron-test >/dev/null 2>&1 || true
-	docker run -d --name kumatron-test dockette/kumatron
+	docker run -d --name kumatron-test ${DOCKER_IMAGE}:${DOCKER_TAG}
 	for i in $$(seq 1 60); do \
-		if docker exec kumatron-test node -e "require('http').get('http://127.0.0.1:3001', (res) => process.exit(res.statusCode >= 200 && res.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"; then \
+		if docker exec kumatron-test node -e "require('http').get('http://127.0.0.1:${DOCKER_TEST_PORT}', (res) => process.exit(res.statusCode >= 200 && res.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"; then \
 			docker rm -f kumatron-test >/dev/null; \
 			exit 0; \
 		fi; \
@@ -29,15 +33,15 @@ run:
 	docker run \
 		-it \
 		--rm \
-		-p 3001:3001 \
+		-p ${DOCKER_TEST_PORT}:3001 \
 		--name kumatron \
-		dockette/kumatron
+		${DOCKER_IMAGE}:${DOCKER_TAG}
 
 test-s3:
 	docker run \
 		-it \
 		--rm \
-		-p 3001:3001 \
+		-p ${DOCKER_TEST_PORT}:3001 \
 		-e LITESTREAM=1 \
 		-e LITESTREAM_TEMPLATE=${LITESTREAM_TEMPLATE} \
 		-e LITESTREAM_DB_FILE=${LITESTREAM_DB_FILE} \
@@ -48,4 +52,4 @@ test-s3:
 		-e LITESTREAM_S3_ACCESS_KEY_ID=${LITESTREAM_S3_ACCESS_KEY_ID} \
 		-e LITESTREAM_S3_SECRET_ACCESS_KEY=${LITESTREAM_S3_SECRET_ACCESS_KEY} \
 		--name kumatron \
-		dockette/kumatron
+		${DOCKER_IMAGE}:${DOCKER_TAG}
