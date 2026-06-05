@@ -68,7 +68,10 @@ docker run \
 make build
 make test
 make run
+make test-s3
 ```
+
+`make test-s3` is a manual S3/Litestream smoke test. Set `LITESTREAM_TEMPLATE=s3` and override the S3 values from `.env.dist` in `.env` before running it.
 
 ## Maintenance
 
