@@ -3,25 +3,49 @@ include .env.dist
 -include .env
 export
 
-build:
-	docker build -t dockette/kumatron .
+DOCKER_IMAGE=dockette/kumatron
+DOCKER_TAG?=latest
+DOCKER_TEST_PORT?=3001
 
+
+.PHONY: build
+build:
+	docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+
+.PHONY: enter
 enter:
 	docker exec -it kumatron bash
 
+.PHONY: test
 test:
+	docker rm -f kumatron-test >/dev/null 2>&1 || true
+	docker run -d --name kumatron-test ${DOCKER_IMAGE}:${DOCKER_TAG}
+	for i in $$(seq 1 60); do \
+		if docker exec kumatron-test node -e "require('http').get('http://127.0.0.1:${DOCKER_TEST_PORT}', (res) => process.exit(res.statusCode >= 200 && res.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))"; then \
+			docker rm -f kumatron-test >/dev/null; \
+			exit 0; \
+		fi; \
+		sleep 2; \
+	done; \
+	docker logs kumatron-test; \
+	docker rm -f kumatron-test >/dev/null; \
+	exit 1
+
+.PHONY: run
+run:
 	docker run \
 		-it \
 		--rm \
-		-p 3001:3001 \
+		-p ${DOCKER_TEST_PORT}:3001 \
 		--name kumatron \
-		dockette/kumatron
+		${DOCKER_IMAGE}:${DOCKER_TAG}
 
+.PHONY: test-s3
 test-s3:
 	docker run \
 		-it \
 		--rm \
-		-p 3001:3001 \
+		-p ${DOCKER_TEST_PORT}:3001 \
 		-e LITESTREAM=1 \
 		-e LITESTREAM_TEMPLATE=${LITESTREAM_TEMPLATE} \
 		-e LITESTREAM_DB_FILE=${LITESTREAM_DB_FILE} \
@@ -31,5 +55,10 @@ test-s3:
 		-e LITESTREAM_S3_PATH=${LITESTREAM_S3_PATH} \
 		-e LITESTREAM_S3_ACCESS_KEY_ID=${LITESTREAM_S3_ACCESS_KEY_ID} \
 		-e LITESTREAM_S3_SECRET_ACCESS_KEY=${LITESTREAM_S3_SECRET_ACCESS_KEY} \
+		-e LITESTREAM_RETENTION=${LITESTREAM_RETENTION} \
+		-e LITESTREAM_RETENTION_CHECK_INTERVAL=${LITESTREAM_RETENTION_CHECK_INTERVAL} \
+		-e LITESTREAM_SNAPSHOT_INTERVAL=${LITESTREAM_SNAPSHOT_INTERVAL} \
+		-e LITESTREAM_SYNC_INTERVAL=${LITESTREAM_SYNC_INTERVAL} \
+		-e LITESTREAM_VALIDATION_INTERVAL=${LITESTREAM_VALIDATION_INTERVAL} \
 		--name kumatron \
-		dockette/kumatron
+		${DOCKER_IMAGE}:${DOCKER_TAG}
