@@ -1,7 +1,7 @@
 FROM debian:bullseye-slim AS litestream
 
 ARG TARGETARCH
-ENV LITESTREAM_VERSION=v0.5.12
+ENV LITESTREAM_VERSION=v0.5.17
 
 RUN apt update && \
     apt install -y curl && \
@@ -25,7 +25,7 @@ RUN apt update && \
     curl -f -L https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-${TARGETARCH} -o /envsubst && \
     chmod +x /envsubst
 
-FROM louislam/uptime-kuma:2.4.0
+FROM louislam/uptime-kuma:2.5.3
 
 ENV DATA_DIR=./data/
 
