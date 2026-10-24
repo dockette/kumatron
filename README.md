@@ -55,6 +55,11 @@ docker run \
 > [!TIP]
 > For more detailed configuration options, please refer to the [Litestream official documentation](https://litestream.io/reference/config/).
 
+## Versions
+
+The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/kumatron:<VERSION>`.
+To release, run `make release`, commit and push to `master`.
+
 ## Development
 
 See [how to contribute](https://contributte.org/contributing.html) to this package.
