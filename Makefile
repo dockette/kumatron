@@ -3,7 +3,7 @@ include .env.dist
 -include .env
 export
 
-VERSION:=$(shell cat VERSION)
+include VERSION
 
 build:
 	docker build -t dockette/kumatron .
@@ -42,6 +42,5 @@ version:
 
 .PHONY: release
 release:
-	@date -u +%Y.%m.%d > VERSION
-	@echo "VERSION: ${VERSION} -> $$(cat VERSION)"
-	@echo "next: git commit -am \"Release: $$(cat VERSION)\" && git push"
+	@sed -i.bak "s/^VERSION=.*/VERSION=$$(date -u +%Y.%m.%d)/" VERSION && rm VERSION.bak
+	@cat VERSION

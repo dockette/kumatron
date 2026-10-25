@@ -10,25 +10,23 @@
 
 -----
 
+[Uptime Kuma](https://github.com/louislam/uptime-kuma) with [Litestream](https://litestream.io/) added. Litestream
+streams the SQLite database to cloud storage, e.g. S3.
+
+## Features
+
+- Uptime Kuma `1.23.17` on the upstream `-debian` image
+- Litestream `v0.3.14` for streaming SQLite, off by default
+- Litestream config is rendered from a template with `envsubst` (`v1.4.3`)
+
 ## Usage
 
-**Basic**
-
-```
-docker run \
-	-it \
-	--rm \
-	-p 3001:3001 \
-	-e DATA_DIR=./data \
-	-v /your/path:/app/data \
-	dockette/kumatron
+```sh
+docker run -it --rm -p 3001:3001 -e DATA_DIR=./data -v /your/path:/app/data dockette/kumatron
 ```
 
-## SQLite + Litestream
-
-> [Litestream](https://litestream.io/) is extra horse power for SQLite. Stream SQLite to cloud storage, e.q. S3.
-
-```
+```sh
+# Stream SQLite to S3
 docker run \
 	-it \
 	--rm \
@@ -52,24 +50,35 @@ docker run \
 	dockette/kumatron
 ```
 
-> [!TIP]
-> For more detailed configuration options, please refer to the [Litestream official documentation](https://litestream.io/reference/config/).
+## Configuration
+
+Litestream is on when `LITESTREAM` is set. The entrypoint renders `/srv/litestream/<LITESTREAM_TEMPLATE>.yml.tpl` to
+`/srv/litestream/litestream.yml`. The `LITESTREAM_RETENTION*`, `LITESTREAM_SNAPSHOT_INTERVAL`,
+`LITESTREAM_SYNC_INTERVAL` and `LITESTREAM_VALIDATION_INTERVAL` values above are the defaults.
+
+For all options, see the [Litestream documentation](https://litestream.io/reference/config/).
 
 ## Versions
 
-The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/kumatron:<VERSION>`.
-To release, run `make release`, commit and push to `master`.
+| Version | Release |
+|---------|---------|
+| `dockette/kumatron:YYYY.MM.DD` | release `YYYY.MM.DD` |
+| `dockette/kumatron:latest` | latest build of `master` |
+
+Releases are listed on [GitHub](https://github.com/dockette/kumatron/releases).
 
 ## Development
 
-See [how to contribute](https://contributte.org/contributing.html) to this package.
+```sh
+make build       # build the image
+make test        # run the image on port 3001
+make test-s3     # run the image with Litestream, settings from .env
+make enter       # open a shell in the running container
+make version     # print VERSION
+make release     # set today's date in VERSION
+```
 
-This package is currently maintaining by these authors.
+## Maintenance
 
-<a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
-</a>
-
------
-
-Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Also thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to
+[support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
