@@ -1,3 +1,5 @@
+ARG UPTIME_KUMA_VERSION=1.23.17
+
 FROM debian:trixie-slim AS litestream
 
 ARG TARGETARCH
@@ -21,7 +23,7 @@ RUN apt update && \
     curl -f -L https://github.com/a8m/envsubst/releases/download/${ENVSUBST_VERSION}/envsubst-Linux-${TARGETARCH} -o /envsubst && \
     chmod +x /envsubst
 
-FROM louislam/uptime-kuma:1.23.17-debian
+FROM louislam/uptime-kuma:${UPTIME_KUMA_VERSION}-debian
 
 ENV DATA_DIR=./data/
 

@@ -3,8 +3,10 @@ include .env.dist
 -include .env
 export
 
+include VERSION
+
 build:
-	docker build -t dockette/kumatron .
+	docker build --build-arg UPTIME_KUMA_VERSION=${UPTIME_KUMA_VERSION} -t dockette/kumatron .
 
 enter:
 	docker exec -it kumatron bash
@@ -33,3 +35,12 @@ test-s3:
 		-e LITESTREAM_S3_SECRET_ACCESS_KEY=${LITESTREAM_S3_SECRET_ACCESS_KEY} \
 		--name kumatron \
 		dockette/kumatron
+
+.PHONY: version
+version:
+	@echo ${VERSION}
+
+.PHONY: release
+release:
+	@sed -i.bak "s/^VERSION=.*/VERSION=$$(date -u +%Y.%m.%d)/" VERSION && rm VERSION.bak
+	@cat VERSION
